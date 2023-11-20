@@ -1,59 +1,29 @@
-// console.log('Hello')
+async function fetchAndRenderCards() {
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const data = await response.json();
 
+        const cardContainer = document.getElementById('card-container');
 
-//DOM -document object model
+        data.forEach((post) => {
+            const card = document.createElement('div');
+            card.classList.add('card');
 
-// console.log(document.body);
+            const title = document.createElement('h2');
+            title.textContent = post.title;
 
-// document.body.style.background = 'red'
+            const body = document.createElement('p');
+            body.textContent = post.body;
 
-// const buttons = document.getElementsByClassName('btn')
+            card.appendChild(title);
+            card.appendChild(body);
 
-// const button = document.getElementById('btn1')
-// const button = document.getElementsByTagName('button')
-
-// buttons[0].style.background = 'red'
-//add() remove() contains()
-
-// console.log(buttons[0].classList)
-// buttons[0].classList.add('red')
-// buttons[0].classList.remove('red')
-
-// console.log()
-// const logger = () => console.log('click')
-//
-// buttons[0].addEventListener('click', () => {
-//     console.log('1')
-// })
-
-//
-// buttons.forEach(button => {
-//     button.onclick = (event) => {
-//         if(event.target.classList.contains('red')) {
-//             event.target.classList.remove('red')
-//         }else{
-//             event.target.classList.add('red')
-//         }
-//     }
-// })
-// const newButton = document.createElement('Button')
-// wrapper.append(newButton)
-
-// Делигирование событий
-
-
-const buttons = document.querySelectorAll('button')
-const wrapper = document.querySelectorAll('.btn-block')
-
-wrapper.addEventListener('click', (event) => {
-    const element =event.target()
-    if(event.target.tagName.toLowerCase()=== 'button'){
-        event.target.addEventListener('click', () => {
-            if(e.target.classList.contains('red')){
-                e.target.classList.remove('red')
-            }else{
-                e.target.classList.add('red')
-            }
-        })
+            cardContainer.appendChild(card);
+        });
+    } catch (error) {
+        console.error('Ошибка при выполнении GET-запроса:', error);
     }
-})
+}
+
+// Вызовем функцию для получения данных и рендеринга карточек при загрузке страницы
+fetchAndRenderCards();
