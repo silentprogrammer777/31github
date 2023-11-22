@@ -1,29 +1,15 @@
-async function fetchAndRenderCards() {
-    try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-        const data = await response.json();
+const button = document.getElementById('color_button');
+button.addEventListener('click', () => {
+    const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    document.body.style.backgroundColor = randomColor;
+});
 
-        const cardContainer = document.getElementById('card-container');
+const audio = new Audio('Believer.mp3')
+button.addEventListener("click",  ()=>{
 
-        data.forEach((post) => {
-            const card = document.createElement('div');
-            card.classList.add('card');
-
-            const title = document.createElement('h2');
-            title.textContent = post.title;
-
-            const body = document.createElement('p');
-            body.textContent = post.body;
-
-            card.appendChild(title);
-            card.appendChild(body);
-
-            cardContainer.appendChild(card);
-        });
-    } catch (error) {
-        console.error('Ошибка при выполнении GET-запроса:', error);
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
     }
-}
-
-// Вызовем функцию для получения данных и рендеринга карточек при загрузке страницы
-fetchAndRenderCards();
+});
