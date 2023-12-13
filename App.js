@@ -1,44 +1,19 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { calculateTotals, getCartItems } from './features/cart/cartSlice';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import CartContainer from './components/CartContainer';
-import Modal from './components/Modal';
-import Layout from "./components/Layout";
-import CartPage from "./components/admin";
-
+import React from 'react';
+import './css/style.css';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Menu from "./menu";
+import Recipe from "./recipe";
 
 function App() {
-const { cartItems, isLoading } = useSelector((store) => store.cart)
-  const { isOpen } = useSelector((store) => store.modal);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(calculateTotals());
-  }, [cartItems]);
-
-  useEffect(() => {
-    dispatch(getCartItems('random'));
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className='loading'>
-        <h1>Loading...</h1>
-      </div>
-    );
-  }
-
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/dd" element={<CartPage/>} />
-          <Route path="/da" element={<CartContainer/>} />
-        </Route>
+        <Route path="/" element={<Menu />} />
+          <Route path="/" element={<Recipe/>} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
