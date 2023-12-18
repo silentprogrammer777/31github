@@ -2,18 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta>
     <title>Title</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .box {
+            background-color: purple;
+            height: 200px;
+            width: 200px;
+        }
+        .box.two {
+            background-color: red;
+        }
+        .box.three {
+            background-color: blue;
+        }
+        [v-cloak] {
+            display: none;
+        }
+        input {
+            margin: 10px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-<div class="btn-block">
-    <button></button>
-    <button></button>
-    <button></button>
-    <button></button>
+    <div id="app" v-cloak>
+        <button @click.prevent.stop="toggleBox">Toggle Box</button>
+        <test-box v-if="isVisible"/>
+    </div>
 
-</div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        let app = Vue.createApp({
+            data() {
+                return {
+                    isVisible: false,
+                };
+            },
+            methods: {
+                toggleBox() {
+                    this.isVisible = !this.isVisible;
+                },
+            },
+            updated() {
+                console.log('updated')
+            }
+        });
+        app.component('test-box',{
+            template:`
+                <div class="box"></div>
+            `,
+            created() {
+                console.log('created')
+            },
+            mounted() {
+                console.log('mounted')
+            },
+            unmounted() {
+                console.log('unmounted')
+            }
+        })
+        app.mount('#app');
+    </script>
 </body>
-  <script src="app.js">//console.log('Hello world')</script>
 </html>
